@@ -9,3 +9,4 @@ feedparser
 requests
 reportlab
 openpyxl
+gunicorn
