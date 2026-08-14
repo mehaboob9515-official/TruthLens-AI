@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TruthLens AI</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/logo.png') }}?v=2">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>🛡️ TruthLens AI</h1>
+    <p>AI-Powered News Verification Platform</p>
+
+    <!-- Navigation Buttons -->
+<div style="margin-bottom:30px;">
+
+    <a href="/history">
+        <button type="button">📜 View Analysis History</button>
+    </a>
+
+    <a href="/dashboard">
+        <button type="button">📊 Dashboard</button>
+    </a>
+
+    <a href="/latest">
+        <button type="button">📰 Latest News</button>
+    </a>
+
+    <a href="/about">
+    <button type="button">ℹ️ About</button>
+</a>
+
+<a href="/contact">
+    <button type="button">📞 Contact</button>
+</a>
+
+</div>
+
+<form id="predictForm" action="/predict" method="POST">
+
+        <h3>📝 Paste News Article</h3>
+
+        <textarea
+            name="news"
+            placeholder="Paste a news article here..."
+            rows="10"></textarea>
+
+        <br><br>
+
+        <h2>OR</h2>
+
+        <h3>🌐 Analyze News URL</h3>
+
+        <input
+            type="url"
+            name="url"
+            placeholder="https://example.com/news/article"
+            style="width:100%; padding:15px; border-radius:10px; border:none; font-size:16px; box-sizing:border-box;">
+
+        <br><br>
+
+        
+        <button id="analyzeBtn" type="submit">
+    🚀 Analyze News
+</button>
+
+<div
+    id="loading"
+    style="
+        display:none;
+        margin-top:20px;
+        font-size:20px;
+        color:#facc15;
+        font-weight:bold;
+    ">
+
+    🔄 AI is analyzing the article...
+
+</div>
+
+    </form>
+
+    <!-- Live Statistics -->
+<div style="
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:20px;
+margin-bottom:35px;
+">
+
+    <div class="result-card" style="width:200px;">
+        <h3>📄 Articles</h3>
+        <h1>{{ total }}</h1>
+    </div>
+
+    <div class="result-card" style="width:200px;">
+        <h3>✅ Real News</h3>
+        <h1>{{ real }}</h1>
+    </div>
+
+    <div class="result-card" style="width:200px;">
+        <h3>❌ Fake News</h3>
+        <h1>{{ fake }}</h1>
+    </div>
+
+    <div class="result-card" style="width:200px;">
+        <h3>🤖 Avg Confidence</h3>
+        <h1>{{ average }}%</h1>
+    </div>
+</div>
+
+    <!-- AI Features -->
+<h2 style="margin-top:40px; margin-bottom:25px;">
+    🚀 TruthLens AI Features
+</h2>
+
+<div style="
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:20px;
+margin-bottom:40px;
+">
+
+    <div class="result-card" style="width:240px;">
+        <h3>🤖 AI Detection</h3>
+        <p>Detects whether a news article is Real or Fake using Machine Learning.</p>
+    </div>
+
+    <div class="result-card" style="width:240px;">
+        <h3>🛡️ Trust Score</h3>
+        <p>Calculates an overall trust score using AI, source credibility, tone, and entities.</p>
+    </div>
+
+    <div class="result-card" style="width:240px;">
+        <h3>🔎 Evidence Check</h3>
+        <p>Searches for supporting news articles to help verify the claim.</p>
+    </div>
+
+    <div class="result-card" style="width:240px;">
+        <h3>😊 Sentiment Analysis</h3>
+        <p>Analyzes the emotional tone of the article to identify biased language.</p>
+    </div>
+
+    <div class="result-card" style="width:240px;">
+        <h3>📰 AI Summary</h3>
+        <p>Automatically generates a concise summary of lengthy news articles.</p>
+    </div>
+
+    <div class="result-card" style="width:240px;">
+        <h3>📍 Entity Recognition</h3>
+        <p>Identifies important people, organizations, and locations mentioned in the article.</p>
+    </div>
+
+</div>
+
+
+    {% if prediction %}
+
+    <div class="result-card">
+
+        <h2>{{ prediction }}</h2>
+<h3>🤖 AI Confidence: {{ confidence }}%</h3>
+
+<a href="{{ url_for('export_pdf') }}">
+    <button type="button">
+        📄 Download AI Report
+    </button>
+</a>
+
+<div style="
+    width:100%;
+    max-width:700px;
+    height:24px;
+    background:rgba(255,255,255,0.15);
+    border-radius:15px;
+    overflow:hidden;
+    margin:15px auto 10px;
+">
+
+    <div style="
+        width:{{ confidence }}%;
+        height:100%;
+        background:#2196F3;
+        border-radius:15px;
+        transition:width 1s ease;
+    "></div>
+
+</div>
+
+<p style="opacity:0.7;">
+    The AI's confidence in this classification is {{ confidence }}%.
+</p>
+
+        <hr style="margin:30px 0; border:1px solid rgba(255,255,255,0.2);">
+
+        <h2>🛡️ AI Analysis Report</h2>
+
+        <ul style="text-align:left; max-width:700px; margin:20px auto; line-height:2;">
+
+            {% for item in explanation %}
+                <li>✔ {{ item }}</li>
+            {% endfor %}
+
+        </ul>
+
+        <!-- News Source Information -->
+        <div style="margin-top:25px; padding:15px; background:rgba(255,255,255,0.08); border-radius:10px;">
+
+    <h2>🌐 News Source</h2>
+
+    <p><strong>Website:</strong> {{ source if source else "Unknown" }}</p>
+
+    <p><strong>Credibility:</strong> {{ credibility if credibility else "Unknown Source" }}</p>
+
+</div>
+
+<!-- Overall Trust Score -->
+<div style="
+    margin-top:25px;
+    padding:25px;
+    background:rgba(255,255,255,0.08);
+    border-radius:15px;
+    text-align:center;
+">
+
+    <h2>🛡️ Overall Trust Score</h2>
+
+    <h1>{{ trust_score }}/100</h1>
+
+    <h3>{{ trust_assessment }}</h3>
+
+    <div style="
+        width:100%;
+        max-width:600px;
+        height:18px;
+        background:rgba(255,255,255,0.15);
+        border-radius:10px;
+        overflow:hidden;
+        margin:15px auto;
+    ">
+
+        <div style="
+            width:{{ trust_score }}%;
+            height:100%;
+            background:#22c55e;
+            border-radius:10px;
+        "></div>
+
+    </div>
+
+    <p style="opacity:0.75;">
+        This score combines AI prediction, source credibility,
+        article tone, content signals, and detected entities.
+    </p>
+
+</div>
+
+<!-- Suspicious Words Highlight -->
+<div style="
+    margin-top:25px;
+    padding:25px;
+    background:rgba(255,255,255,0.08);
+    border-radius:15px;
+    text-align:left;
+">
+
+    <h2 style="text-align:center;">
+        🔎 Suspicious Word Analysis
+    </h2>
+
+    <p style="opacity:0.75; text-align:center;">
+        Words or phrases identified as potentially suspicious are highlighted below.
+    </p>
+
+    <div style="
+        margin-top:20px;
+        padding:20px;
+        background:rgba(0,0,0,0.15);
+        border-radius:10px;
+        line-height:1.8;
+    ">
+
+        {{ highlighted_news | safe }}
+
+    </div>
+
+</div>
+
+<div style="margin-top:25px; text-align:center;">
+
+    <h2>🔎 Verify Using Fact-Check Websites</h2>
+
+    <a href="https://www.google.com/search?q={{ title }}+fact+check" target="_blank">
+        <button style="background:#2563eb;">
+            🌐 Google Fact Check
+        </button>
+    </a>
+
+    <a href="https://www.snopes.com/search/?q={{ title }}" target="_blank">
+        <button style="background:#16a34a;">
+            📰 Snopes
+        </button>
+    </a>
+
+    <a href="https://www.politifact.com/search/?q={{ title }}" target="_blank">
+        <button style="background:#dc2626;">
+            ⚖️ PolitiFact
+        </button>
+    </a>
+
+</div>
+
+<!-- Sentiment Analysis -->
+<div style="margin-top:25px; padding:20px; background:rgba(255,255,255,0.08); border-radius:10px;">
+
+    <h2>😊 Sentiment Analysis</h2>
+
+    <p>
+        <strong>Article Tone:</strong>
+        {{ sentiment }}
+    </p>
+
+    <p>
+        <strong>Sentiment Score:</strong>
+        {{ sentiment_score }}
+    </p>
+
+    <div style="
+        width:100%;
+        height:20px;
+        background:rgba(255,255,255,0.15);
+        border-radius:10px;
+        overflow:hidden;
+        margin-top:15px;
+    ">
+
+        <div style="
+            width:{{ ((sentiment_score + 1) / 2 * 100) }}%;
+            height:100%;
+            background:#2196F3;
+            border-radius:10px;
+        "></div>
+
+    </div>
+
+    <div style="
+        display:flex;
+        justify-content:space-between;
+        margin-top:8px;
+        font-size:14px;
+    ">
+        <span>😡 Negative</span>
+        <span>😐 Neutral</span>
+        <span>😊 Positive</span>
+    </div>
+
+</div>
+
+<!-- AI Article Summary -->
+<div style="
+    margin-top:25px;
+    padding:25px;
+    background:rgba(255,255,255,0.08);
+    border-radius:10px;
+    text-align:left;
+">
+
+    <h2 style="text-align:center;">
+        📝 AI Article Summary
+    </h2>
+
+    <div style="
+        margin-top:20px;
+        padding:20px;
+        background:rgba(0,0,0,0.12);
+        border-radius:10px;
+        line-height:1.8;
+    ">
+
+        <p style="margin:0;">
+            {{ summary }}
+        </p>
+
+    </div>
+
+    <p style="
+        text-align:center;
+        margin-top:15px;
+        font-size:14px;
+        opacity:0.8;
+    ">
+        🤖 Generated automatically from the analyzed article
+    </p>
+
+</div>
+
+<!-- Keyword Extraction -->
+<div style="
+    margin-top:25px;
+    padding:25px;
+    background:rgba(255,255,255,0.08);
+    border-radius:10px;
+    text-align:left;
+">
+
+    <h2 style="text-align:center;">
+        🔑 Key Topics
+    </h2>
+
+    <div style="
+        display:flex;
+        flex-wrap:wrap;
+        gap:10px;
+        justify-content:center;
+        margin-top:20px;
+    ">
+
+        {% for keyword in keywords %}
+            <span style="
+                padding:10px 15px;
+                background:rgba(0,0,0,0.15);
+                border-radius:20px;
+                font-size:15px;
+            ">
+                🔹 {{ keyword }}
+            </span>
+        {% endfor %}
+
+    </div>
+
+</div>
+
+<!-- Named Entity Recognition -->
+<div style="
+    margin-top:25px;
+    padding:25px;
+    background:rgba(255,255,255,0.08);
+    border-radius:10px;
+    text-align:left;
+">
+
+    <h2 style="text-align:center;">
+        🧠 Important Entities
+    </h2>
+
+    <div style="
+        display:grid;
+        grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));
+        gap:15px;
+        margin-top:20px;
+    ">
+
+        <!-- People -->
+        <div style="
+            padding:18px;
+            background:rgba(0,0,0,0.12);
+            border-radius:10px;
+        ">
+            <h3>👤 People</h3>
+
+            {% if entities.people %}
+                <ul>
+                    {% for person in entities.people %}
+                        <li>{{ person }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No people detected.</p>
+            {% endif %}
+        </div>
+
+        <!-- Organizations -->
+        <div style="
+            padding:18px;
+            background:rgba(0,0,0,0.12);
+            border-radius:10px;
+        ">
+            <h3>🏢 Organizations</h3>
+
+            {% if entities.organizations %}
+                <ul>
+                    {% for organization in entities.organizations %}
+                        <li>{{ organization }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No organizations detected.</p>
+            {% endif %}
+        </div>
+
+        <!-- Locations -->
+        <div style="
+            padding:18px;
+            background:rgba(0,0,0,0.12);
+            border-radius:10px;
+        ">
+            <h3>📍 Locations</h3>
+
+            {% if entities.locations %}
+                <ul>
+                    {% for location in entities.locations %}
+                        <li>{{ location }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No locations detected.</p>
+            {% endif %}
+        </div>
+
+    </div>
+
+</div>
+
+ <!-- Overall Trust Score -->
+<div style="
+    margin-top:25px;
+    padding:25px;
+    background:rgba(255,255,255,0.08);
+    border-radius:10px;
+    text-align:center;
+">
+
+    <h2>⭐ Overall Trust Score</h2>
+
+    <div style="
+        font-size:48px;
+        font-weight:bold;
+        margin:20px 0;
+    ">
+        {{ trust_score }} / 100
+    </div>
+
+    <h3>
+        {{ trust_assessment }}
+    </h3>
+
+    <div style="
+        width:100%;
+        max-width:600px;
+        height:20px;
+        background:rgba(255,255,255,0.15);
+        border-radius:10px;
+        overflow:hidden;
+        margin:20px auto;
+    ">
+
+        <div style="
+            width:{{ trust_score }}%;
+            height:100%;
+            background:#2196F3;
+            border-radius:10px;
+        "></div>
+
+    </div>
+
+    {% if prediction == "❌ Fake News" %}
+
+    <div style="
+        margin-top:20px;
+        padding:15px;
+        background:rgba(255,80,80,0.15);
+        border-radius:10px;
+    ">
+        ⚠️ <strong>AI Warning:</strong>
+        The AI model classified this article as Fake News.
+        A high source score does not guarantee that the article itself is true.
+    </div>
+
+    {% elif prediction == "✅ Real News" %}
+
+    <div style="
+        margin-top:20px;
+        padding:15px;
+        background:rgba(80,200,120,0.15);
+        border-radius:10px;
+    ">
+        ✅ <strong>AI Assessment:</strong>
+        The AI model classified this article as Real News.
+    </div>
+
+    {% endif %}
+
+    <p style="opacity:0.8; margin-top:20px;">
+        This score considers AI prediction confidence and detected source credibility.
+    </p>
+
+</div>
+
+<!-- AI Explainability -->
+<div style="
+    margin-top:25px;
+    padding:25px;
+    background:rgba(255,255,255,0.08);
+    border-radius:10px;
+">
+
+    <h2>🤖 Why did the AI make this prediction?</h2>
+
+    <ul style="
+        text-align:left;
+        line-height:1.8;
+        max-width:700px;
+        margin:20px auto;
+    ">
+
+        {% for reason in ai_explanation %}
+            <li>{{ reason }}</li>
+        {% endfor %}
+
+    </ul>
+
+</div>
+
+<!-- Suspicious Word Highlighting -->
+<div style="
+    margin-top:25px;
+    padding:25px;
+    background:rgba(255,255,255,0.08);
+    border-radius:10px;
+">
+
+    <h2>🔎 Suspicious Language Detection</h2>
+
+    <p style="opacity:0.8;">
+        Words or phrases that may indicate sensational or clickbait language
+        are highlighted below.
+    </p>
+
+    <div style="
+        margin-top:20px;
+        padding:20px;
+        background:rgba(0,0,0,0.15);
+        border-radius:8px;
+        line-height:1.8;
+        text-align:left;
+    ">
+        {{ highlighted_news | safe }}
+    </div>
+
+    <p style="
+        margin-top:15px;
+        font-size:14px;
+        opacity:0.7;
+    ">
+        🔴 Highlighted words are language signals only. They do not
+        automatically mean that a claim is false.
+    </p>
+
+</div>
+
+
+<!-- Why This Result? -->
+<div style="
+    margin-top:25px;
+    padding:25px;
+    background:rgba(255,255,255,0.08);
+    border-radius:10px;
+">
+
+    <h2 style="text-align:center;">
+        🔍 Why This Result?
+    </h2>
+
+    <div style="
+        display:grid;
+        grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));
+        gap:15px;
+        margin-top:20px;
+    ">
+
+        <div style="
+            padding:18px;
+            background:rgba(0,0,0,0.12);
+            border-radius:10px;
+            text-align:center;
+        ">
+            <strong>🤖 AI Prediction</strong>
+            <br><br>
+            {{ prediction }}
+        </div>
+
+        <div style="
+            padding:18px;
+            background:rgba(0,0,0,0.12);
+            border-radius:10px;
+            text-align:center;
+        ">
+            <strong>🌐 Source</strong>
+            <br><br>
+            {{ credibility }}
+        </div>
+
+        <div style="
+            padding:18px;
+            background:rgba(0,0,0,0.12);
+            border-radius:10px;
+            text-align:center;
+        ">
+            <strong>😊 Article Tone</strong>
+            <br><br>
+            {{ sentiment }}
+        </div>
+
+        <div style="
+            padding:18px;
+            background:rgba(0,0,0,0.12);
+            border-radius:10px;
+            text-align:center;
+        ">
+            <strong>🛡️ Risk Level</strong>
+            <br><br>
+            {{ risk_level }}
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Evidence Check -->
+<div style="
+    margin-top:25px;
+    padding:25px;
+    background:rgba(255,255,255,0.08);
+    border-radius:10px;
+">
+
+    <h2 style="text-align:center;">
+        🔍 Evidence Check
+    </h2>
+
+    <p style="text-align:center; font-size:18px;">
+        <strong>{{ evidence_status }}</strong>
+    </p>
+
+    {% if evidence_articles %}
+
+    <div style="margin-top:20px;">
+
+        <h3>Related News Articles</h3>
+
+        <ul style="line-height:2;">
+
+            {% for article in evidence_articles %}
+
+            <li>
+                <a href="{{ article.link }}" target="_blank">
+                    {{ article.title }}
+                </a>
+            </li>
+
+            {% endfor %}
+
+        </ul>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+<!-- Analysis Overview -->
+<div style="
+    margin-top:25px;
+    padding:25px;
+    background:rgba(255,255,255,0.08);
+    border-radius:10px;
+">
+
+    <h2 style="text-align:center;">
+        📊 Analysis Overview
+    </h2>
+
+    <div style="
+        display:grid;
+        grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));
+        gap:15px;
+        margin-top:20px;
+    ">
+
+        <div style="
+            padding:18px;
+            background:rgba(0,0,0,0.12);
+            border-radius:10px;
+            text-align:center;
+        ">
+            <strong>Prediction</strong>
+            <br><br>
+            {{ prediction }}
+        </div>
+
+        <div style="
+            padding:18px;
+            background:rgba(0,0,0,0.12);
+            border-radius:10px;
+            text-align:center;
+        ">
+            <strong>Confidence</strong>
+            <br><br>
+            {{ confidence }}%
+        </div>
+
+        <div style="
+            padding:18px;
+            background:rgba(0,0,0,0.12);
+            border-radius:10px;
+            text-align:center;
+        ">
+            <strong>Source</strong>
+            <br><br>
+            {{ source }}
+        </div>
+
+        <div style="
+            padding:18px;
+            background:rgba(0,0,0,0.12);
+            border-radius:10px;
+            text-align:center;
+        ">
+            <strong>Article Tone</strong>
+            <br><br>
+            {{ sentiment }}
+        </div>
+
+    </div>
+
+</div>
+        <!-- Disclaimer -->
+        <div style="margin-top:25px; padding:15px; background:rgba(255,255,255,0.08); border-radius:10px;">
+
+            <strong>⚠ Disclaimer</strong>
+
+            <p style="margin-top:10px;">
+                This prediction is generated by an AI model based on the submitted content.
+                It should be used as an aid and not as definitive proof that a news story is
+                true or false. Always verify important information using trusted sources.
+            </p>
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+<!-- Footer -->
+<footer style="
+margin-top:60px;
+padding:30px;
+text-align:center;
+background:rgba(255,255,255,0.08);
+border-top:2px solid rgba(255,255,255,0.15);
+border-radius:15px 15px 0 0;
+">
+
+    <h2>🛡️ TruthLens AI</h2>
+
+    <p>AI-Powered News Verification Platform</p>
+
+    <p>
+        © 2026 TruthLens AI |
+        Built with Flask, Machine Learning & NLP
+    </p>
+
+    <div style="margin-top:15px;">
+
+        <a href="/" style="margin:10px;">🏠 Home</a>
+
+        <a href="/history" style="margin:10px;">📜 History</a>
+
+        <a href="/dashboard" style="margin:10px;">📊 Dashboard</a>
+
+        <a href="/latest" style="margin:10px;">📰 Latest News</a>
+
+    </div>
+
+</footer>
+
+<script>
+
+document.getElementById("predictForm").addEventListener("submit", function(){
+
+    // Show loading message
+    document.getElementById("loading").style.display = "block";
+
+    // Disable button
+    document.getElementById("analyzeBtn").disabled = true;
+
+    // Change button text
+    document.getElementById("analyzeBtn").innerHTML =
+        "⏳ Analyzing...";
+
+});
+
+</script>
+
+</body>
+</html>

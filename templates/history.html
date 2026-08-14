@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TruthLens AI - History</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<div class="container" style="text-align:center;">
+
+    <!-- Page Title -->
+    <h1>📜 Analysis History</h1>
+
+    <!-- Navigation Buttons -->
+    <div style="margin-bottom:30px;">
+
+        <a href="/">
+            <button>🏠 Home</button>
+        </a>
+
+        <a href="/dashboard">
+            <button>📊 Dashboard</button>
+        </a>
+
+        <a href="/export/pdf">
+            <button style="background:#16a34a;">
+                📄 Export PDF
+            </button>
+        </a>
+
+        <a href="/export/excel">
+            <button style="background:#15803d;">
+                📈 Export Excel
+            </button>
+        </a>
+
+        <!-- Clear All History -->
+        <a href="/clear-history"
+           onclick="return confirm('⚠ Are you sure you want to delete ALL history? This action cannot be undone.');">
+
+            <button style="background:#b91c1c;">
+                🗑️ Clear All History
+            </button>
+
+        </a>
+
+    </div>
+
+
+    <!-- Search Section -->
+    <div style="
+        max-width:900px;
+        margin:0 auto 30px auto;
+    ">
+
+        <form action="/history" method="GET">
+
+            <input
+                type="text"
+                name="search"
+                placeholder="🔍 Search by prediction, date or news..."
+                value="{{ search if search else '' }}"
+                style="
+                    width:100%;
+                    padding:15px;
+                    border:none;
+                    border-radius:10px;
+                    font-size:16px;
+                    margin-bottom:15px;
+                    box-sizing:border-box;
+                "
+            >
+
+            <button type="submit">
+                🔍 Search
+            </button>
+
+            <a href="/history">
+                <button type="button">
+                    🔄 Clear
+                </button>
+            </a>
+
+        </form>
+
+    </div>
+
+
+    <!-- History Table -->
+    <div style="
+        width:100%;
+        overflow-x:auto;
+        margin:0 auto;
+    ">
+
+        <table style="
+            width:100%;
+            border-collapse:collapse;
+            margin:0 auto;
+        ">
+
+            <tr style="background:#2563eb;color:white;">
+
+                <th style="padding:15px;">
+                    ID
+                </th>
+
+                <th style="padding:15px;">
+                    Prediction
+                </th>
+
+                <th style="padding:15px;">
+                    Confidence
+                </th>
+
+                <th style="padding:15px;">
+                    Date
+                </th>
+
+                <th style="padding:15px;">
+                    Action
+                </th>
+
+            </tr>
+
+
+            {% if history %}
+
+                {% for row in history %}
+
+                <tr style="
+                    border-bottom:1px solid rgba(255,255,255,0.2);
+                    text-align:center;
+                ">
+
+                    <td style="padding:15px;">
+                        {{ row[0] }}
+                    </td>
+
+                    <td style="padding:15px;">
+                        {{ row[2] }}
+                    </td>
+
+                    <td style="padding:15px;">
+                        {{ row[3] }}%
+                    </td>
+
+                    <td style="padding:15px;">
+                        {{ row[4] }}
+                    </td>
+
+                    <td style="padding:15px;">
+
+                        <a
+                            href="/delete/{{ row[0] }}"
+                            onclick="return confirm('Delete this record?');"
+                        >
+
+                            <button style="background:#dc2626;">
+                                🗑 Delete
+                            </button>
+
+                        </a>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            {% else %}
+
+                <tr>
+
+                    <td
+                        colspan="5"
+                        style="padding:30px; text-align:center;"
+                    >
+                        No matching records found.
+                    </td>
+
+                </tr>
+
+            {% endif %}
+
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

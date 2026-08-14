@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TruthLens AI Dashboard</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>📊 TruthLens AI Dashboard</h1>
+
+    <br>
+
+    <a href="/">
+        <button>🏠 Home</button>
+    </a>
+
+    <a href="/history">
+        <button>📜 History</button>
+    </a>
+
+    <br><br>
+
+    <!-- Statistics Cards -->
+    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:20px;">
+
+        <div class="result-card" style="width:200px;">
+            <h2>Total Analyses</h2>
+            <h1>{{ total }}</h1>
+        </div>
+
+        <div class="result-card" style="width:200px;">
+            <h2>✅ Real News</h2>
+            <h1>{{ real }}</h1>
+        </div>
+
+        <div class="result-card" style="width:200px;">
+            <h2>❌ Fake News</h2>
+            <h1>{{ fake }}</h1>
+        </div>
+
+        <div class="result-card" style="width:200px;">
+            <h2>Average Confidence</h2>
+            <h1>{{ average }}%</h1>
+        </div>
+
+    </div>
+
+    <br><br>
+
+    <!-- Charts -->
+    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:40px;">
+
+        <div class="result-card" style="width:400px;">
+            <h2>🥧 Real vs Fake News</h2>
+            <canvas id="pieChart"></canvas>
+        </div>
+
+        <div class="result-card" style="width:400px;">
+            <h2>📊 News Analysis Count</h2>
+            <canvas id="barChart"></canvas>
+        </div>
+
+        <div class="result-card" style="width:850px;">
+    <h2>📈 Analysis Trend</h2>
+    <canvas id="trendChart"></canvas>
+</div>
+
+    </div>
+
+</div>
+
+<script>
+
+// Pie Chart
+new Chart(document.getElementById("pieChart"), {
+
+    type: "pie",
+
+    data: {
+
+        labels: ["Real News", "Fake News"],
+
+        datasets: [{
+
+            data: [{{ real }}, {{ fake }}],
+
+            backgroundColor: [
+                "#22c55e",
+                "#ef4444"
+            ]
+
+        }]
+    }
+
+});
+
+
+// Bar Chart
+new Chart(document.getElementById("barChart"), {
+
+    type: "bar",
+
+    data: {
+
+        labels: ["Real News", "Fake News"],
+
+        datasets: [{
+
+            label: "Articles",
+
+            data: [{{ real }}, {{ fake }}],
+
+            backgroundColor: [
+                "#22c55e",
+                "#ef4444"
+            ]
+
+        }]
+    },
+
+    options: {
+
+        responsive: true,
+
+        plugins: {
+
+            legend: {
+
+                display: false
+
+            }
+
+        }
+
+    }
+
+});
+
+const dailyData = {{ daily_data | tojson }};
+
+const trendLabels = dailyData.map(item => item[0]);
+const trendValues = dailyData.map(item => item[1]);
+
+new Chart(document.getElementById("trendChart"), {
+    type: "line",
+
+    data: {
+        labels: trendLabels,
+
+        datasets: [{
+            label: "Articles Analyzed",
+            data: trendValues,
+            tension: 0.3,
+            fill: false
+        }]
+    },
+
+    options: {
+        responsive: true,
+
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    stepSize: 1
+                }
+            }
+        }
+    }
+});
+
+</script>
+
+</body>
+</html>

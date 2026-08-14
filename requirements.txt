@@ -1,0 +1,11 @@
+Flask
+joblib
+newspaper3k
+textblob
+yake
+spacy
+sumy
+feedparser
+requests
+reportlab
+openpyxl

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TruthLens Analytics</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            text-align: center;
+        }
+
+        .stat {
+            margin: 20px auto;
+            padding: 20px;
+            max-width: 500px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+        }
+
+        .chart {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 60px;
+            height: 250px;
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 20px;
+            border-bottom: 2px solid #333;
+        }
+
+        .bar-wrapper {
+            height: 100%;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        .bar {
+            width: 80px;
+            min-height: 5px;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .real-bar {
+            background: #4caf50;
+        }
+
+        .fake-bar {
+            background: #f44336;
+        }
+
+        .bar-label {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .bar-value {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>📊 TruthLens Analytics</h1>
+
+    <!-- Statistics -->
+
+    <div class="stat">
+        <h2>📚 Total Articles Analyzed</h2>
+        <p>{{ total_articles }}</p>
+    </div>
+
+    <div class="stat">
+        <h2>✅ Real News</h2>
+        <p>{{ real_count }}</p>
+    </div>
+
+    <div class="stat">
+        <h2>❌ Fake News</h2>
+        <p>{{ fake_count }}</p>
+    </div>
+
+    <div class="stat">
+        <h2>🤖 Average AI Confidence</h2>
+        <p>{{ average_confidence }}%</p>
+    </div>
+
+
+    <!-- Real vs Fake Chart -->
+
+    <h2>📈 Real vs Fake News</h2>
+
+    <div class="chart">
+
+        <!-- Real News Bar -->
+        <div class="bar-wrapper">
+
+            <div class="bar-value">
+                {{ real_count }}
+            </div>
+
+            <div
+                class="bar real-bar"
+                style="height: {{ real_count * 30 }}px;">
+            </div>
+
+            <div class="bar-label">
+                ✅ Real
+            </div>
+
+        </div>
+
+
+        <!-- Fake News Bar -->
+        <div class="bar-wrapper">
+
+            <div class="bar-value">
+                {{ fake_count }}
+            </div>
+
+            <div
+                class="bar fake-bar"
+                style="height: {{ fake_count * 30 }}px;">
+            </div>
+
+            <div class="bar-label">
+                ❌ Fake
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
