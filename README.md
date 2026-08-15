@@ -56,3 +56,6 @@ TruthLens AI is an AI-powered news analysis web application designed to help use
 
 ```bash
 pip install -r requirements.txt
+
+## Deployment
+TruthLens AI is deployed as a web application.
