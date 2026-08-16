@@ -434,26 +434,35 @@ def home():
 @app.route("/sitemap.xml")
 def sitemap():
 
-    sitemap_xml = """<?xml version="1.0" encoding="UTF-8"?>
+    site_url = request.url_root.rstrip("/")
+
+    sitemap_xml = f"""<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-        <loc>https://truthlens-ai-8-d6of.onrender.com/</loc>
+        <loc>{site_url}/</loc>
     </url>
 </urlset>
 """
 
-    return Response(sitemap_xml, mimetype="application/xml")
+    return sitemap_xml, 200, {
+        "Content-Type": "application/xml"
+    }
 
 # ===========================
 # Robots.txt
 # ===========================
 @app.route("/robots.txt")
 def robots():
-    return """User-agent: *
+
+    sitemap_url = request.url_root.rstrip("/") + "/sitemap.xml"
+
+    return f"""User-agent: *
 Allow: /
 
-Sitemap: https://truthlens-ai-8-d6of.onrender.com/sitemap.xml
-""", 200, {"Content-Type": "text/plain"}
+Sitemap: {sitemap_url}
+""", 200, {
+        "Content-Type": "text/plain"
+    }
 
 # ===========================
 # About Page
