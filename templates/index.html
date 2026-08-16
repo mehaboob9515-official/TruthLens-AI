@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+DOCTYPE html>
 <html lang="en">
 <head>
     <meta name="google-site-verification" content="xVlWhBSk-eaCmGmErE7J3E_JtEf3yw1cJBxf6E19v1U" />
@@ -13,281 +13,858 @@
 
 <div class="container">
 
-    <h1>🛡️ TruthLens AI</h1>
-    <p>AI-Powered News Verification Platform</p>
+    <!-- Professional Header -->
+    <header class="tl-header">
 
-    <!-- Navigation Buttons -->
-<div style="margin-bottom:30px;">
+        <div class="tl-brand">
+
+            <div class="tl-logo">
+                🛡️
+            </div>
+
+            <div>
+                <h1>TruthLens AI</h1>
+
+                <p class="tl-tagline">
+                    AI-Powered News Verification
+                </p>
+            </div>
+
+        </div>
+
+        <div class="tl-status">
+            <span class="tl-status-dot"></span>
+            AI Verification Online
+        </div>
+
+    </header>
+
+    <!-- Professional Navigation -->
+<nav class="tl-nav">
 
     <a href="/history">
-    <button type="button">View Analysis History</button>
-</a>
+        <button type="button">📋 History</button>
+    </a>
 
-<a href="/dashboard">
-    <button type="button">Dashboard</button>
-</a>
+    <a href="/dashboard">
+        <button type="button">📊 Dashboard</button>
+    </a>
 
-<a href="/latest">
-    <button type="button">Latest News</button>
-</a>
+    <a href="/latest">
+        <button type="button">📰 Latest News</button>
+    </a>
 
-<a href="/about">
-    <button type="button">About</button>
-</a>
+    <a href="/about">
+        <button type="button">ℹ️ About</button>
+    </a>
 
-<a href="/contact">
-    <button type="button">Contact</button>
-</a>
+    <a href="/contact">
+        <button type="button">✉️ Contact</button>
+    </a>
 
-{% if session.get("user_id") %}
+    {% if session.get("user_id") %}
 
-<a href="/logout">
-    <button type="button">Logout ({{ session["username"] }})</button>
-</a>
+    <a href="/logout">
+        <button type="button">
+            🚪 Logout ({{ session["username"] }})
+        </button>
+    </a>
 
-{% else %}
+    {% else %}
 
-<a href="/login">
-    <button type="button">Login</button>
-</a>
+    <a href="/login">
+        <button type="button">🔐 Login</button>
+    </a>
 
-<a href="/register">
-    <button type="button">Register</button>
-</a>
+    <a href="/register">
+        <button type="button">✨ Register</button>
+    </a>
 
-{% endif %}
+    {% endif %}
 
-</div>
+</nav>
 
-<form id="predictForm" action="/predict" method="POST">
+<!-- Professional Hero -->
+<section class="tl-hero">
 
-        <h3>Paste News Article</h3>
+    <div class="tl-hero-badge">
+        🧠 Machine Learning • NLP • Evidence Analysis
+    </div>
 
-        <textarea
-            name="news"
-            placeholder="Paste a news article here..."
-            rows="10"></textarea>
+    <h2>
+        Don't just read the news.
+        <span>Verify it.</span>
+    </h2>
 
-        <br><br>
+    <p>
+        Analyze news articles with AI-powered fake-news detection,
+        trust scoring, sentiment analysis, source verification,
+        and evidence checking.
+    </p>
 
-        <h2>OR</h2>
+    <div class="tl-hero-points">
 
-        <h3>Analyze News URL</h3>
+        <div>
+            🛡️ <strong>AI Detection</strong>
+        </div>
 
-        <input
-            type="url"
-            name="url"
-            placeholder="https://example.com/news/article"
-            style="width:100%; padding:15px; border-radius:10px; border:none; font-size:16px; box-sizing:border-box;">
+        <div>
+            🔎 <strong>Evidence Check</strong>
+        </div>
 
-        <br><br>
+        <div>
+            📈 <strong>Trust Score</strong>
+        </div>
 
-        
-        <button id="analyzeBtn" type="submit">
-    Analyze News
-</button>
+    </div>
 
-<div
-    id="loading"
-    style="
-        display:none;
-        margin-top:20px;
-        font-size:20px;
-        color:#facc15;
-        font-weight:bold;
-    ">
+</section>
 
-    AI is analyzing the article...
+<!-- =========================
+     AI NEWS ANALYZER
+     ========================= -->
 
-</div>
+<section class="analyzer-card">
+
+    <div class="section-heading">
+
+        <span class="section-label">
+            AI NEWS VERIFICATION
+        </span>
+
+        <h2>Analyze a News Article</h2>
+
+        <p>
+            Paste an article or enter a news URL.
+            TruthLens AI will analyze it using machine learning
+            and NLP.
+        </p>
+
+    </div>
+
+    <form id="predictForm" action="/predict" method="POST">
+
+        <div class="input-section">
+
+            <label for="news">
+                📰 News Article
+            </label>
+
+            <textarea
+                id="news"
+                name="news"
+                placeholder="Paste the full news article here..."
+                rows="10"></textarea>
+
+        </div>
+
+        <div class="analyzer-divider">
+            <span>OR</span>
+        </div>
+
+        <div class="input-section">
+
+            <label for="url">
+                🔗 News URL
+            </label>
+
+            <input
+                id="url"
+                type="url"
+                name="url"
+                placeholder="https://example.com/news/article">
+
+        </div>
+
+        <button
+            id="analyzeBtn"
+            class="analyze-button"
+            type="submit">
+
+            🔎 Analyze News
+
+        </button>
+
+        <div
+            id="loading"
+            class="analyzer-loading">
+
+            <span class="loading-spinner"></span>
+
+            <span>
+                AI is analyzing the article...
+            </span>
+
+        </div>
 
     </form>
 
-    <!-- Live Statistics -->
-<div style="
-display:flex;
-flex-wrap:wrap;
-justify-content:center;
-gap:20px;
-margin-bottom:35px;
-">
+</section>
 
-    <div class="result-card" style="width:200px;">
-        <h3>Articles</h3>
-        <h1>{{ total }}</h1>
-    </div>
+   <!-- =========================
+     LIVE STATISTICS
+     ========================= -->
 
-    <div class="result-card" style="width:200px;">
-        <h3>Real News</h3>
-        <h1>{{ real }}</h1>
-    </div>
+<section class="stats-section">
 
-    <div class="result-card" style="width:200px;">
-        <h3>Fake News</h3>
-        <h1>{{ fake }}</h1>
-    </div>
+    <div class="section-heading stats-heading">
 
-    <div class="result-card" style="width:200px;">
-        <h3>Avg Confidence</h3>
-        <h1>{{ average }}%</h1>
-    </div>
-</div>
+        <span class="section-label">
+            LIVE PLATFORM STATISTICS
+        </span>
 
-    <!-- AI Features -->
-<h2 style="margin-top:40px; margin-bottom:25px;">
-    TruthLens AI Features
-</h2>
+        <h2>TruthLens AI Overview</h2>
 
-<div style="
-display:flex;
-flex-wrap:wrap;
-justify-content:center;
-gap:20px;
-margin-bottom:40px;
-">
-
-    <div class="result-card" style="width:240px;">
-        <h3>AI Detection</h3>
-        <p>Detects whether a news article is Real or Fake using Machine Learning.</p>
-    </div>
-
-    <div class="result-card" style="width:240px;">
-        <h3>Trust Score</h3>
-        <p>Calculates an overall trust score using AI, source credibility, tone, and entities.</p>
-    </div>
-
-    <div class="result-card" style="width:240px;">
-        <h3>Evidence Check</h3>
-        <p>Searches for supporting news articles to help verify the claim.</p>
-    </div>
-
-    <div class="result-card" style="width:240px;">
-        <h3>Sentiment Analysis</h3>
-        <p>Analyzes the emotional tone of the article to identify biased language.</p>
-    </div>
-
-    <div class="result-card" style="width:240px;">
-        <h3>AI Summary</h3>
-        <p>Automatically generates a concise summary of lengthy news articles.</p>
-    </div>
-
-    <div class="result-card" style="width:240px;">
-        <h3>Entity Recognition</h3>
-        <p>Identifies important people, organizations, and locations mentioned in the article.</p>
-    </div>
-
-</div>
-
-
-    {% if prediction %}
-
-    <div class="result-card">
-
-        <h2>{{ prediction }}</h2>
-<h3>AI Confidence: {{ confidence }}%</h3>
-
-<div class="ai-grid">
-
-    <div class="ai-card">
-        <p class="ai-card-title">Article Summary</p>
-        <p class="ai-card-description">
-            {{ summary }}
-        </p>
-    </div>
-
-    <div class="ai-card">
-        <p class="ai-card-title">Sentiment Analysis</p>
-        <p class="ai-card-value">
-            {{ sentiment }}
-        </p>
-        <p class="ai-card-description">
-            Sentiment Score: {{ sentiment_score }}
-        </p>
-    </div>
-
-    <div class="ai-card">
-        <p class="ai-card-title">Trust Score</p>
-        <p class="ai-card-value">
-            {{ trust_score }}%
-        </p>
-        <p class="ai-card-description">
-            {{ trust_assessment }}
-        </p>
-    </div>
-
-    <div class="ai-card">
-        <p class="ai-card-title">Keywords</p>
-        <p class="ai-card-description">
-            {{ keywords }}
-        </p>
-    </div>
-
-    <div class="ai-card">
-        <p class="ai-card-title">Named Entities</p>
-        <p class="ai-card-description">
-            {{ entities }}
-        </p>
-    </div>
-
-</div>
-
-<a href="{{ url_for('export_pdf') }}">
-    <button type="button">
-        Download AI Report
-    </button>
-</a>
-
-<div style="
-    width:100%;
-    max-width:700px;
-    height:24px;
-    background:rgba(255,255,255,0.15);
-    border-radius:15px;
-    overflow:hidden;
-    margin:15px auto 10px;
-">
-
-    <div style="
-        width:{{ confidence }}%;
-        height:100%;
-        background:#2196F3;
-        border-radius:15px;
-        transition:width 1s ease;
-    "></div>
-
-</div>
-
-<p style="opacity:0.7;">
-    The AI's confidence in this classification is {{ confidence }}%.
-</p>
-
-        <div class="analysis-report">
-
-    <div class="section-heading">
-        <span class="section-label">AI ANALYSIS</span>
-        <h2>Verification Analysis</h2>
         <p>
-            Key findings generated from the article analysis.
+            Real-time statistics from analyzed news articles.
         </p>
+
     </div>
 
-    <div class="explanation-list">
 
-        {% for item in explanation %}
+    <div class="stats-grid">
 
-        <div class="explanation-item">
-            <div class="explanation-marker"></div>
+        <!-- Articles -->
 
-            <div class="explanation-text">
-                {{ item }}
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                📰
             </div>
+
+            <div class="stat-content">
+
+                <p class="stat-label">
+                    Articles Analyzed
+                </p>
+
+                <h3>
+                    {{ total }}
+                </h3>
+
+                <span class="stat-description">
+                    Total analyses
+                </span>
+
+            </div>
+
         </div>
 
-        {% endfor %}
+
+        <!-- Real News -->
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                ✅
+            </div>
+
+            <div class="stat-content">
+
+                <p class="stat-label">
+                    Real News
+                </p>
+
+                <h3>
+                    {{ real }}
+                </h3>
+
+                <span class="stat-description">
+                    Classified as real
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- Fake News -->
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                ⚠️
+            </div>
+
+            <div class="stat-content">
+
+                <p class="stat-label">
+                    Fake News
+                </p>
+
+                <h3>
+                    {{ fake }}
+                </h3>
+
+                <span class="stat-description">
+                    Classified as suspicious
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- Confidence -->
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                🎯
+            </div>
+
+            <div class="stat-content">
+
+                <p class="stat-label">
+                    Avg. Confidence
+                </p>
+
+                <h3>
+                    {{ average }}%
+                </h3>
+
+                <span class="stat-description">
+                    AI prediction confidence
+                </span>
+
+            </div>
+
+        </div>
 
     </div>
 
-</div>
+</section>
+
+   <!-- =========================
+     AI FEATURES
+     ========================= -->
+
+<section class="features-section">
+
+    <div class="section-heading features-heading">
+
+        <span class="section-label">
+            POWERFUL AI TOOLS
+        </span>
+
+        <h2>Everything You Need to Verify News</h2>
+
+        <p>
+            TruthLens AI combines multiple AI and NLP techniques
+            to provide a deeper analysis of online news.
+        </p>
+
+    </div>
+
+    <div class="features-grid">
+
+        <div class="feature-card">
+            <div class="feature-icon">🧠</div>
+            <h3>AI Detection</h3>
+            <p>
+                Detect whether a news article is likely to be
+                Real or Fake using machine learning.
+            </p>
+            <span class="feature-tag">MACHINE LEARNING</span>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">🎯</div>
+            <h3>Trust Score</h3>
+            <p>
+                Calculate an overall trust score using AI,
+                source credibility, tone, and detected entities.
+            </p>
+            <span class="feature-tag">TRUST ANALYSIS</span>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">🔎</div>
+            <h3>Evidence Check</h3>
+            <p>
+                Find supporting articles and evidence to help
+                verify the claims in a news story.
+            </p>
+            <span class="feature-tag">EVIDENCE</span>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">💭</div>
+            <h3>Sentiment Analysis</h3>
+            <p>
+                Analyze the emotional tone of an article and
+                identify potentially biased language.
+            </p>
+            <span class="feature-tag">NLP</span>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">📝</div>
+            <h3>AI Summary</h3>
+            <p>
+                Generate a concise summary of lengthy news
+                articles for faster understanding.
+            </p>
+            <span class="feature-tag">AI SUMMARY</span>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">👤</div>
+            <h3>Entity Recognition</h3>
+            <p>
+                Identify important people, organizations,
+                and locations mentioned in an article.
+            </p>
+            <span class="feature-tag">NLP</span>
+        </div>
+
+    </div>
+
+</section>
+
+{% if prediction %}
+    {% if prediction %}
+
+<section class="results-section">
+
+    <!-- =========================
+         RESULT HEADER
+         ========================= -->
+
+    <div class="result-hero">
+
+        <span class="section-label">
+            AI VERIFICATION RESULT
+        </span>
+
+        <div class="prediction-badge">
+            🛡️ {{ prediction }}
+        </div>
+
+        <h2>
+            AI Confidence:
+            <strong>{{ confidence }}%</strong>
+        </h2>
+
+        <p>
+            TruthLens AI analyzed the submitted content using
+            machine learning and natural language processing.
+        </p>
+
+    </div>
+
+
+    <!-- =========================
+         CONFIDENCE
+         ========================= -->
+
+    <div class="confidence-card">
+
+        <div class="confidence-header">
+
+            <div>
+                <span class="section-label">
+                    AI CONFIDENCE
+                </span>
+
+                <h3>
+                    {{ confidence }}%
+                </h3>
+            </div>
+
+            <span class="confidence-icon">
+                🎯
+            </span>
+
+        </div>
+
+        <div class="confidence-progress">
+
+            <div
+                class="confidence-progress-bar"
+                style="width: {{ confidence }}%;">
+            </div>
+
+        </div>
+
+        <p>
+            The AI's confidence in this classification is
+            {{ confidence }}%.
+        </p>
+
+    </div>
+
+
+    <!-- =========================
+         AI ANALYSIS CARDS
+         ========================= -->
+
+    <div class="analysis-grid">
+
+        <div class="analysis-card analysis-card-large">
+
+            <div class="analysis-icon">📝</div>
+
+            <span class="analysis-label">
+                ARTICLE SUMMARY
+            </span>
+
+            <h3>AI Summary</h3>
+
+            <p>
+                {{ summary }}
+            </p>
+
+        </div>
+
+
+        <div class="analysis-card">
+
+            <div class="analysis-icon">💭</div>
+
+            <span class="analysis-label">
+                SENTIMENT
+            </span>
+
+            <h3>
+                {{ sentiment }}
+            </h3>
+
+            <p>
+                Sentiment Score:
+                {{ sentiment_score }}
+            </p>
+
+        </div>
+
+
+        <div class="analysis-card">
+
+            <div class="analysis-icon">🛡️</div>
+
+            <span class="analysis-label">
+                TRUST SCORE
+            </span>
+
+            <h3>
+                {{ trust_score }}%
+            </h3>
+
+            <p>
+                {{ trust_assessment }}
+            </p>
+
+        </div>
+
+
+        <div class="analysis-card">
+
+            <div class="analysis-icon">🔑</div>
+
+            <span class="analysis-label">
+                KEYWORDS
+            </span>
+
+            <h3>Key Topics</h3>
+
+            <p>
+                {{ keywords }}
+            </p>
+
+        </div>
+
+
+        <div class="analysis-card">
+
+            <div class="analysis-icon">👤</div>
+
+            <span class="analysis-label">
+                NAMED ENTITIES
+            </span>
+
+            <h3>Important Entities</h3>
+
+            <p>
+                {{ entities }}
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         TRUST SCORE
+         ========================= -->
+
+    <div class="trust-result-card">
+
+        <div class="trust-result-header">
+
+            <div>
+
+                <span class="section-label">
+                    TRUST METRIC
+                </span>
+
+                <h2>
+                    Overall Trust Score
+                </h2>
+
+                <p>
+                    Estimated reliability based on the AI
+                    verification analysis.
+                </p>
+
+            </div>
+
+            <div class="trust-number">
+                {{ trust_score }}%
+            </div>
+
+        </div>
+
+        <div class="trust-progress">
+
+            <div
+                class="trust-progress-bar"
+                style="width: {{ trust_score }}%;">
+            </div>
+
+        </div>
+
+        <h3>
+            {{ trust_assessment }}
+        </h3>
+
+    </div>
+
+
+    <!-- =========================
+         AI EXPLANATION
+         ========================= -->
+
+    <div class="explanation-card">
+
+        <div class="section-heading">
+
+            <span class="section-label">
+                AI EXPLAINABILITY
+            </span>
+
+            <h2>
+                Why did the AI make this prediction?
+            </h2>
+
+            <p>
+                Key factors considered during the analysis.
+            </p>
+
+        </div>
+
+        <div class="explanation-list">
+
+            {% for item in explanation %}
+
+            <div class="explanation-item">
+
+                <span class="explanation-marker">
+                    ✓
+                </span>
+
+                <p>
+                    {{ item }}
+                </p>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         WHY THIS RESULT
+         ========================= -->
+
+    <div class="why-result-card">
+
+        <div class="section-heading">
+
+            <span class="section-label">
+                ANALYSIS OVERVIEW
+            </span>
+
+            <h2>
+                Why This Result?
+            </h2>
+
+        </div>
+
+        <div class="why-result-grid">
+
+            <div class="why-result-item">
+
+                <span>AI Prediction</span>
+
+                <strong>
+                    {{ prediction }}
+                </strong>
+
+            </div>
+
+            <div class="why-result-item">
+
+                <span>Source</span>
+
+                <strong>
+                    {{ credibility }}
+                </strong>
+
+            </div>
+
+            <div class="why-result-item">
+
+                <span>Article Tone</span>
+
+                <strong>
+                    {{ sentiment }}
+                </strong>
+
+            </div>
+
+            <div class="why-result-item">
+
+                <span>Risk Level</span>
+
+                <strong>
+                    {{ risk_level }}
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         EVIDENCE
+         ========================= -->
+
+    <div class="evidence-section">
+
+        <div class="section-heading">
+
+            <span class="section-label">
+                EVIDENCE CHECK
+            </span>
+
+            <h2>
+                Evidence Articles
+            </h2>
+
+            <p>
+                Articles and sources used to help check the
+                analyzed news.
+            </p>
+
+        </div>
+
+        <div class="evidence-status">
+            <strong>
+                {{ evidence_status }}
+            </strong>
+        </div>
+
+        {% if evidence_articles %}
+
+        <div class="evidence-list">
+
+            {% for article in evidence_articles %}
+
+            <div class="evidence-card">
+
+                <div class="evidence-number">
+                    {{ loop.index }}
+                </div>
+
+                <div class="evidence-content">
+
+                    <h3>
+                        {{ article.title }}
+                    </h3>
+
+                    <a
+                        href="{{ article.link }}"
+                        target="_blank"
+                        rel="noopener noreferrer">
+
+                        Read Full Article →
+                    </a>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+
+        <div class="evidence-empty">
+            No supporting evidence articles were found.
+        </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- =========================
+         DOWNLOAD REPORT
+         ========================= -->
+
+    <div class="report-action">
+
+        <a href="{{ url_for('export_pdf') }}">
+
+            <button type="button">
+                📄 Download AI Report
+            </button>
+
+        </a>
+
+    </div>
+
+
+    <!-- =========================
+         DISCLAIMER
+         ========================= -->
+
+    <div class="result-disclaimer">
+
+        <strong>
+            ⚠️ AI Disclaimer
+        </strong>
+
+        <p>
+            This prediction is generated by an AI model based
+            on the submitted content. It should be used as an
+            aid and not as definitive proof that a news story
+            is true or false. Always verify important
+            information using trusted sources.
+        </p>
+
+    </div>
+
+</section>
+
+{% endif %}
+{% endif %}
 
         <!-- News Source Information -->
         <div class="source-card">
@@ -444,7 +1021,7 @@ margin-bottom:40px;
 
         <div
             class="progress-bar"
-            style="width: {{ ((sentiment_score + 1) / 2 * 100) }}%;">
+           style="width: {{ (((sentiment_score | default(0, true)) + 1) / 2 * 100) }}%;"
         </div>
 
     </div>
@@ -512,7 +1089,7 @@ margin-bottom:40px;
 
             <h3>People</h3>
 
-            {% if entities.people %}
+            {% if entities and entities.people %}
 
                 <ul>
                     {% for person in entities.people %}
@@ -534,7 +1111,7 @@ margin-bottom:40px;
 
             <h3>Organizations</h3>
 
-            {% if entities.organizations %}
+            {% if entities and entities.organizations %}
 
                 <ul>
                     {% for organization in entities.organizations %}
@@ -556,7 +1133,7 @@ margin-bottom:40px;
 
             <h3>Locations</h3>
 
-            {% if entities.locations %}
+            {% if entities and entities.locations %}
 
                 <ul>
                     {% for location in entities.locations %}
@@ -782,118 +1359,195 @@ margin-bottom:40px;
 </div>
 
 <!-- Analysis Overview -->
-<div style="
-    margin-top:25px;
-    padding:25px;
-    background:rgba(255,255,255,0.08);
-    border-radius:10px;
-">
 
-    <h2 style="text-align:center;">
+<div class="analysis-overview">
+
+    <h2>
         Analysis Overview
     </h2>
 
-    <div style="
-        display:grid;
-        grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));
-        gap:15px;
-        margin-top:20px;
-    ">
 
-        <div style="
-            padding:18px;
-            background:rgba(0,0,0,0.12);
-            border-radius:10px;
-            text-align:center;
-        ">
-            <strong>Prediction</strong>
-            <br><br>
-            {{ prediction }}
+    <div class="analysis-overview-grid">
+
+
+        <!-- Prediction -->
+
+        <div class="analysis-overview-item">
+
+            <strong>
+                Prediction
+            </strong>
+
+            <span>
+                {{ prediction }}
+            </span>
+
         </div>
 
-        <div style="
-            padding:18px;
-            background:rgba(0,0,0,0.12);
-            border-radius:10px;
-            text-align:center;
-        ">
-            <strong>Confidence</strong>
-            <br><br>
-            {{ confidence }}%
+
+        <!-- Confidence -->
+
+        <div class="analysis-overview-item">
+
+            <strong>
+                Confidence
+            </strong>
+
+            <span>
+                {{ confidence }}%
+            </span>
+
         </div>
 
-        <div style="
-            padding:18px;
-            background:rgba(0,0,0,0.12);
-            border-radius:10px;
-            text-align:center;
-        ">
-            <strong>Source</strong>
-            <br><br>
-            {{ source }}
+
+        <!-- Source -->
+
+        <div class="analysis-overview-item">
+
+            <strong>
+                Source
+            </strong>
+
+            <span>
+                {{ source }}
+            </span>
+
         </div>
 
-        <div style="
-            padding:18px;
-            background:rgba(0,0,0,0.12);
-            border-radius:10px;
-            text-align:center;
-        ">
-            <strong>Article Tone</strong>
-            <br><br>
-            {{ sentiment }}
+
+        <!-- Article Tone -->
+
+        <div class="analysis-overview-item">
+
+            <strong>
+                Article Tone
+            </strong>
+
+            <span>
+                {{ sentiment }}
+            </span>
+
         </div>
+
 
     </div>
 
 </div>
-        <!-- Disclaimer -->
-        <div style="margin-top:25px; padding:15px; background:rgba(255,255,255,0.08); border-radius:10px;">
 
-            <strong>⚠ Disclaimer</strong>
+        <!-- =========================
+     AI DISCLAIMER
+     ========================= -->
 
-            <p style="margin-top:10px;">
-                This prediction is generated by an AI model based on the submitted content.
-                It should be used as an aid and not as definitive proof that a news story is
-                true or false. Always verify important information using trusted sources.
+<div class="professional-disclaimer">
+
+    <div class="disclaimer-icon">
+        ⚠️
+    </div>
+
+    <div class="disclaimer-content">
+
+        <strong>
+            AI Disclaimer
+        </strong>
+
+        <p>
+            This prediction is generated by an AI model based
+            on the submitted content. It should be used as an
+            aid and not as definitive proof that a news story
+            is true or false. Always verify important
+            information using trusted sources.
+        </p>
+
+    </div>
+
+</div>
+
+<!-- =========================
+     PROFESSIONAL FOOTER
+     ========================= -->
+
+<footer class="tl-footer">
+
+    <div class="tl-footer-main">
+
+        <!-- Brand -->
+
+        <div class="tl-footer-brand">
+
+            <div class="tl-footer-logo">
+                🛡️
+            </div>
+
+            <div>
+
+                <h2>
+                    TruthLens AI
+                </h2>
+
+                <p>
+                    AI-Powered News Verification Platform
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- Navigation -->
+
+        <div class="tl-footer-links">
+
+            <h3>
+                Quick Links
+            </h3>
+
+            <a href="/">
+                Home
+            </a>
+
+            <a href="/history">
+                History
+            </a>
+
+            <a href="/dashboard">
+                Dashboard
+            </a>
+
+            <a href="/latest">
+                Latest News
+            </a>
+
+        </div>
+
+
+        <!-- About -->
+
+        <div class="tl-footer-about">
+
+            <h3>
+                About TruthLens
+            </h3>
+
+            <p>
+                TruthLens AI uses machine learning and natural
+                language processing to help users analyze and
+                verify online news.
             </p>
 
         </div>
 
     </div>
 
-    {% endif %}
 
-</div>
+    <div class="tl-footer-bottom">
 
-<!-- Footer -->
-<footer style="
-margin-top:60px;
-padding:30px;
-text-align:center;
-background:rgba(255,255,255,0.08);
-border-top:2px solid rgba(255,255,255,0.15);
-border-radius:15px 15px 0 0;
-">
+        <p>
+            © 2026 TruthLens AI
+        </p>
 
-    <h2>🛡️ TruthLens AI</h2>
-
-    <p>AI-Powered News Verification Platform</p>
-
-    <p>
-        © 2026 TruthLens AI |
-        Built with Flask, Machine Learning & NLP
-    </p>
-
-    <div style="margin-top:15px;">
-
-        <a href="/" style="margin:10px;">Home</a>
-
-        <a href="/history" style="margin:10px;">History</a>
-
-        <a href="/dashboard" style="margin:10px;">Dashboard</a>
-
-        <a href="/latest" style="margin:10px;">Latest News</a>
+        <p>
+            Built with Flask, Machine Learning & NLP
+        </p>
 
     </div>
 

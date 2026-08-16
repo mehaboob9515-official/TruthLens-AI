@@ -1,0 +1,64 @@
+[33mf12cbbb[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m Exclude large dataset from repository
+ .gitignore | 1 [32m+[m
+ 1 file changed, 1 insertion(+)
+[33m738ef6e[m Exclude large dataset from repository
+ .gitignore                  |      1 [32m+[m
+ dataset/WELFake_Dataset.csv | 362508 [31m-----------------------------------------[m
+ 2 files changed, 1 insertion(+), 362508 deletions(-)
+[33md376923[m Initial commit
+ .gitignore                  |    5 [32m+[m
+ .vscode/launch.json         |   15 [32m+[m
+ README.md                   |   58 [32m++[m
+ app.py                      | 1315 [32m+++++++++++++++++++++++++++++++++++++++++++[m
+ check_db.py                 |   11 [32m+[m
+ database.py                 |   20 [32m+[m
+ model.pkl                   |  Bin [31m0[m -> [32m2275586[m bytes
+ requirements.txt            |   11 [32m+[m
+ static/css/style.css        |  988 [32m++++++++++++++++++++++++++++++++[m
+ static/css/style_backup.css |  169 [32m++++++[m
+ static/images/logo.png      |  Bin [31m0[m -> [32m813502[m bytes
+ static/js/script.js         |    0
+ templates/404.html          |   30 [32m+[m
+ templates/500.html          |   31 [32m+[m
+ templates/about.html        |   80 [32m+++[m
+ templates/analytics.html    |  144 [32m+++++[m
+ templates/contact.html      |   47 [32m++[m
+ templates/dashboard.html    |  184 [32m++++++[m
+ templates/history.html      |  200 [32m+++++++[m
+ templates/index.html        |  920 [32m++++++++++++++++++++++++++++++[m
+ templates/index_backup.html |  904 [32m+++++++++++++++++++++++++++++[m
+ templates/latest.html       |   54 [32m++[m
+ templates/login.html        |   31 [32m+[m
+ templates/register.html     |   34 [32m++[m
+ train_model.py              |   53 [32m++[m
+ trusted_sources.py          |   31 [32m+[m
+ 26 files changed, 5335 insertions(+)
+[33m9e7d01b[m Initial commit
+ .gitignore                  |      5 [32m+[m
+ .vscode/launch.json         |     15 [32m+[m
+ README.md                   |     58 [32m+[m
+ app.py                      |   1315 [32m+[m
+ check_db.py                 |     11 [32m+[m
+ database.py                 |     20 [32m+[m
+ dataset/WELFake_Dataset.csv | 362508 [32m+++++++++++++++++++++++++++++++++++++++++[m
+ model.pkl                   |    Bin [31m0[m -> [32m2275586[m bytes
+ requirements.txt            |     11 [32m+[m
+ static/css/style.css        |    988 [32m+[m
+ static/css/style_backup.css |    169 [32m+[m
+ static/images/logo.png      |    Bin [31m0[m -> [32m813502[m bytes
+ static/js/script.js         |      0
+ templates/404.html          |     30 [32m+[m
+ templates/500.html          |     31 [32m+[m
+ templates/about.html        |     80 [32m+[m
+ templates/analytics.html    |    144 [32m+[m
+ templates/contact.html      |     47 [32m+[m
+ templates/dashboard.html    |    184 [32m+[m
+ templates/history.html      |    200 [32m+[m
+ templates/index.html        |    920 [32m+[m
+ templates/index_backup.html |    904 [32m+[m
+ templates/latest.html       |     54 [32m+[m
+ templates/login.html        |     31 [32m+[m
+ templates/register.html     |     34 [32m+[m
+ train_model.py              |     53 [32m+[m
+ trusted_sources.py          |     31 [32m+[m
+ 27 files changed, 367843 insertions(+)
