@@ -445,6 +445,17 @@ def sitemap():
     return Response(sitemap_xml, mimetype="application/xml")
 
 # ===========================
+# Robots.txt
+# ===========================
+@app.route("/robots.txt")
+def robots():
+    return """User-agent: *
+Allow: /
+
+Sitemap: https://truthlens-ai-8-d6of.onrender.com/sitemap.xml
+""", 200, {"Content-Type": "text/plain"}
+
+# ===========================
 # About Page
 # ===========================
 
