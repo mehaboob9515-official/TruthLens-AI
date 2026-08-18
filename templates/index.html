@@ -17,6 +17,15 @@
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/logo.png') }}?v=2">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "TruthLens AI",
+  "url": "{{ request.url_root.rstrip('/') }}/",
+  "description": "AI-powered news verification platform that analyzes news articles, detects potentially fake news, calculates trust scores, and performs evidence and sentiment analysis."
+}
+</script>
 </head>
 <body>
 
