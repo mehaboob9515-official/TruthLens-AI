@@ -16,6 +16,7 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="{{ request.url_root.rstrip('/') }}/">
 <meta property="og:site_name" content="TruthLens AI">
+<meta property="og:image" content="{{ request.url_root.rstrip('/') }}{{ url_for('static', filename='images/logo.png') }}">
     <link
     rel="canonical"
     href="{{ request.url_root.rstrip('/') }}/"
