@@ -17,6 +17,13 @@
 <meta property="og:url" content="{{ request.url_root.rstrip('/') }}/">
 <meta property="og:site_name" content="TruthLens AI">
 <meta property="og:image" content="{{ request.url_root.rstrip('/') }}{{ url_for('static', filename='images/logo.png') }}">
+
+<!-- Twitter/X Card metadata -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="TruthLens AI - AI-Powered News Verification">
+<meta name="twitter:description" content="Analyze news with AI, detect potentially fake news, calculate trust scores, analyze sentiment, and verify evidence.">
+<meta name="twitter:image" content="{{ request.url_root.rstrip('/') }}{{ url_for('static', filename='images/logo.png') }}">
+
     <link
     rel="canonical"
     href="{{ request.url_root.rstrip('/') }}/"
