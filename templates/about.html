@@ -3,9 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About - TruthLens AI</title>
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>About TruthLens AI - AI-Powered News Verification</title>
+
+    <meta name="description"
+          content="Learn about TruthLens AI, an AI-powered news verification platform that analyzes news articles using fake news detection, trust scores, sentiment analysis, and evidence verification.">
+
+    <meta name="robots" content="index, follow">
+
+    <!-- Canonical URL -->
+    <link rel="canonical"
+          href="{{ request.url_root.rstrip('/') }}/about">
+
+    <!-- Open Graph -->
+    <meta property="og:title"
+          content="About TruthLens AI - AI-Powered News Verification">
+    <meta property="og:description"
+          content="Learn how TruthLens AI analyzes news articles using AI, trust scores, sentiment analysis, and evidence verification.">
+    <meta property="og:type" content="website">
+    <meta property="og:url"
+          content="{{ request.url_root.rstrip('/') }}/about">
+    <meta property="og:site_name" content="TruthLens AI">
+    <meta property="og:image"
+          content="{{ request.url_root.rstrip('/') }}{{ url_for('static', filename='images/logo.png') }}">
+
+    <!-- Twitter/X -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title"
+          content="About TruthLens AI - AI-Powered News Verification">
+    <meta name="twitter:description"
+          content="Learn how TruthLens AI analyzes news articles using AI, trust scores, sentiment analysis, and evidence verification.">
+    <meta name="twitter:image"
+          content="{{ request.url_root.rstrip('/') }}{{ url_for('static', filename='images/logo.png') }}">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <link rel="icon"
+          type="image/png"
+          href="{{ url_for('static', filename='images/logo.png') }}?v=2">
 </head>
 
 <body>
@@ -54,6 +90,109 @@
     </div>
 
     <br>
+
+    <br>
+
+<div class="result-card">
+
+    <h2>🔍 How AI News Verification Works</h2>
+
+    <p style="text-align:left; line-height:1.8;">
+        TruthLens AI analyzes news content using Artificial Intelligence,
+        Machine Learning, and Natural Language Processing techniques.
+        The system examines the available article content and produces
+        multiple signals that can help users evaluate the reliability
+        of a news story.
+    </p>
+
+    <p style="text-align:left; line-height:1.8;">
+        The analysis may consider the language used in the article,
+        sentiment, source information, extracted evidence, and other
+        available signals before generating the final result.
+    </p>
+
+</div>
+
+<br>
+
+<div class="result-card">
+
+    <h2>📊 Trust Score</h2>
+
+    <p style="text-align:left; line-height:1.8;">
+        The Trust Score is an indicator generated from the signals
+        available to the TruthLens AI analysis system. It helps users
+        understand how strongly the available evidence and analysis
+        support the reliability of an article.
+    </p>
+
+    <p style="text-align:left; line-height:1.8;">
+        A Trust Score should not be interpreted as an absolute guarantee
+        that an article is true or false. Users should consider the
+        original source and supporting evidence before making important
+        decisions.
+    </p>
+
+</div>
+
+<br>
+
+<div class="result-card">
+
+    <h2>😊 Sentiment Analysis</h2>
+
+    <p style="text-align:left; line-height:1.8;">
+        TruthLens AI analyzes the emotional tone and language used in
+        news content. Sentiment analysis can help identify strongly
+        positive, negative, or emotionally charged language.
+    </p>
+
+    <p style="text-align:left; line-height:1.8;">
+        Highly emotional or sensational language does not automatically
+        mean that a story is false, but it can be a useful signal for
+        further investigation.
+    </p>
+
+</div>
+
+<br>
+
+<div class="result-card">
+
+    <h2>🔎 Evidence Verification</h2>
+
+    <p style="text-align:left; line-height:1.8;">
+        TruthLens AI examines available evidence and verification signals
+        associated with the analyzed article. These signals can help
+        users identify claims that may require additional checking.
+    </p>
+
+    <p style="text-align:left; line-height:1.8;">
+        Whenever possible, users should compare important claims with
+        reliable primary sources and independent reporting.
+    </p>
+
+</div>
+
+<br>
+
+<div class="result-card">
+
+    <h2>⚠️ Limitations of AI Verification</h2>
+
+    <p style="text-align:left; line-height:1.8;">
+        Artificial Intelligence can make mistakes. News articles may
+        contain incomplete information, changing facts, misleading
+        claims, or evidence that is difficult to automatically verify.
+    </p>
+
+    <p style="text-align:left; line-height:1.8;">
+        TruthLens AI is therefore designed as a supporting verification
+        tool, not as a replacement for human judgment, reliable sources,
+        or professional fact-checking.
+    </p>
+
+</div>
 
     <div class="result-card">
 
