@@ -452,6 +452,22 @@ def sitemap():
     }
 
 # ===========================
+# Robots.txt
+# ===========================
+@app.route("/robots.txt")
+def robots():
+
+    sitemap_url = request.url_root.rstrip("/") + "/sitemap.xml"
+
+    return f"""User-agent: *
+Allow: /
+
+Sitemap: {sitemap_url}
+""", 200, {
+        "Content-Type": "text/plain"
+    }
+
+# ===========================
 # About Page
 # ===========================
 
