@@ -467,6 +467,10 @@ Sitemap: {sitemap_url}
         "Content-Type": "text/plain"
     }
 
+@app.route("/fake-news-detection")
+def fake_news_detection():
+    return render_template("fake-news-detection.html")
+
 # ===========================
 # About Page
 # ===========================
