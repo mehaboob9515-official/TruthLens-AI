@@ -444,6 +444,9 @@ def sitemap():
     <url>
         <loc>{site_url}/about</loc>
     </url>
+        <url>
+        <loc>{site_url}/fake-news-detection</loc>
+    </url>
 </urlset>
 """
 
